@@ -83,19 +83,20 @@ var App = (function() {
 
     // Wrapper
     this.dw.createTable = this.dw.createData.bind(this, this.dw.Models.TableModel);
-
-    /* Usage */
-    this.stdTable = { data: [{ a: 1, b: 'c' }, { a: 2, b: 'c' }, { a: 3, b: 'c' }] };
-    this.proxyTable = this.dw.createTable(() => {
-        console.log('customProxyTable getData() called');
-        return [{ z: 8, x: 'i' }, { z: 9, x: 'j' }]
-    })
-
-    // console.log(this);
-    setInterval(function() {
-        console.log(Date());
-        this.stdTable.data.forEach(l => console.log(l));
-        this.proxyTable.data.forEach(l => console.log(l));
-    }.bind(this), 5 * 1000);
-
+    return this;
 })();
+
+
+// Usage
+var stdTable = { data: [{ a: 1, b: 'c' }] };
+var proxyTable = App.dw.createTable(() => {
+    console.log('customProxyTable getData() called');
+    return [{ z: 9, x: 'j' + Date.now() }]
+})
+
+// console.log(this);
+setInterval(function() {
+    console.log(Date());
+    stdTable.data.forEach(l => console.log(l));
+    proxyTable.data.forEach(l => console.log(l));
+}, 1000);
